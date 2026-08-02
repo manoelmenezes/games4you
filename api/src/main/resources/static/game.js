@@ -17,11 +17,11 @@ function createGame() {
         dataType: 'json',                               // Tells jQuery you expect JSON back
         data: JSON.stringify(payload),
         success: function(response) {
+            connect();
             console.log("Success:", response);
             game = response;
             showGame(game);
             $("#gameId").val(game.id);
-            connect();
         },
         error: function(xhr, status, error) {
             console.error("Error:", error);
@@ -68,7 +68,7 @@ function disconnect() {
 }
 
 function sendMove() {
-    destination = '/game/' + $("#gameId").val() + '/player/' + $("#playerId").val();
+    destination = '/app/game/' + $("#gameId").val() + '/player/' + $("#playerId").val();
     stompClient.publish({
         destination: destination,
         body: JSON.stringify({'gameId': $("#gameId").val()})
