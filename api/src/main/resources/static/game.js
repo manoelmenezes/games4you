@@ -18,11 +18,9 @@ function createGame() {
         data: JSON.stringify(payload),
         success: function(response) {
             console.log("Success:", response);
-            game = JSON.parse(response);
+            game = response;
             showGame(game);
             $("#gameId").val(game.id);
-            console.log("Game:", response);
-            console.log("Status:", status);
             connect();
         },
         error: function(xhr, status, error) {
