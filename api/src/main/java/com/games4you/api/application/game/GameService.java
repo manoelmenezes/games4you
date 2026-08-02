@@ -60,13 +60,12 @@ public class GameService {
         log.info("Creating game...");
 
         PlayersQueue pq1 = getPlayer();
+        playersQueueRepository.delete(pq1);
         PlayersQueue pq2 = getPlayer();
+        playersQueueRepository.delete(pq2);
 
         Game game = new Game(pq1.getPlayerId(), pq2.getPlayerId(), NEW_GAME_BOARD_FEN);
         gameRepository.save(game);
-        
-        playersQueueRepository.delete(pq1);
-        playersQueueRepository.delete(pq2);
     }
 
     private PlayersQueue getPlayer() {
