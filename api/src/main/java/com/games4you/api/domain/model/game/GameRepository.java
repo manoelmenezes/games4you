@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface GameRepository extends JpaRepository<Game, Long> {
 
-    @Query("SELECT p FROM Game g WHERE g.whitePlayerId = :playerId OR g.blackPlayerId = :playerId")
+    @Query("SELECT g FROM Game g WHERE g.whitePlayerId = :playerId OR g.blackPlayerId = :playerId")
     Optional<Game> getCreatedGameByPlayerId(@Param("playerId")Long playerId);
     
 }
