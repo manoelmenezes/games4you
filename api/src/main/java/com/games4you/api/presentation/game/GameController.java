@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.games4you.api.application.game.GameService;
 import com.games4you.api.application.game.NewGameCmd;
 import com.games4you.api.domain.model.game.Game;
+import com.games4you.api.domain.model.game.GameNotFoundException;
 import com.games4you.api.domain.model.game.GameRepository;
+import com.games4you.api.domain.model.game.PlayerUnavailableException;
 
 @RestController
 public class GameController {

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.games4you.api.domain.model.game.Game;
 import com.games4you.api.domain.model.game.GameRepository;
+import com.games4you.api.domain.model.game.PlayerUnavailableException;
 import com.games4you.api.domain.model.game.PlayersQueue;
 import com.games4you.api.domain.model.game.PlayersQueueRepository;
 
@@ -82,7 +83,7 @@ public class GameService {
         } while (!Thread.currentThread().isInterrupted() && pq.isEmpty());
 
         if (pq.isEmpty()) {
-            throw new RuntimeException("Player not found");
+            throw new PlayerUnavailableException();
         }
 
         return pq.get();        

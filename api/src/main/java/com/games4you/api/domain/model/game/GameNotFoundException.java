@@ -1,4 +1,4 @@
-package com.games4you.api.presentation.game;
+package com.games4you.api.domain.model.game;
 
 public class GameNotFoundException extends RuntimeException {
 
