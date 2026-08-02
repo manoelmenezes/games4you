@@ -10,14 +10,24 @@ function createGame() {
         playerId: $("#playerId").val(),
     };
 
-    // Send the POST request
-    $.post("http://34.44.12.137:8080/games", payload, function(response, status) {
-        game = JSON.parse(response.body);
-        showGame(game);
-        $("#gameId").val(game.id);
-        console.log("Game:", response);
-        console.log("Status:", status);
-        connect();
+    $.ajax({
+        url: 'http://34.44.12.137:8080/games',
+        type: 'POST',
+        contentType: 'application/json; charset=utf-8', // Tells the server you are sending JSON
+        dataType: 'json',                               // Tells jQuery you expect JSON back
+        data: JSON.stringify(payload),
+        success: function(response) {
+            console.log("Success:", response);
+            game = JSON.parse(response.body);
+            showGame(game);
+            $("#gameId").val(game.id);
+            console.log("Game:", response);
+            console.log("Status:", status);
+            connect();
+        },
+        error: function(xhr, status, error) {
+            console.error("Error:", error);
+        }
     });
 }
 
