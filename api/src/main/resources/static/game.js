@@ -54,7 +54,7 @@ function setConnected(connected) {
     else {
         $("#conversation").hide();
     }
-    $("#game").html("");
+    
 }
 
 function connect() {
