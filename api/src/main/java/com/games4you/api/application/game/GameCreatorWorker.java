@@ -16,9 +16,9 @@ import com.games4you.api.domain.model.game.PlayersQueueRepository;
 @Component
 public class GameCreatorWorker implements Runnable {
 
-    private static final String NEW_GAME_BOARD_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-
     private static final Logger log = LoggerFactory.getLogger(GameCreatorWorker.class);
+
+    private static final String NEW_GAME_BOARD_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
     private static final int SLEEP_TIME_MS = 1000;
 
     private final PlayersQueueRepository playersQueueRepository;
