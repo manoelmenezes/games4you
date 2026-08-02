@@ -77,7 +77,7 @@ function sendMove() {
 
 function showGame(game) {
     console.log('Game:', game);
-    $("#game").append("<tr><td>" + game + "</td></tr>");
+    $("#game").append("<tr><td>" + JSON.stringify(game) + "</td></tr>");
     
 }
 
