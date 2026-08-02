@@ -10,7 +10,7 @@ import java.util.concurrent.Executors;
 @Configuration
 public class GameCreatorCmdLineRunner {
 
-    private static final int POOL_SIZE = 3;
+    private static final int POOL_SIZE = 1;
 
      @Bean
      CommandLineRunner startGameCreatorWorkers(GameCreatorWorker worker) {
