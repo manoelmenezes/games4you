@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface PlayersQueueRepository extends JpaRepository<PlayersQueue, Long> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    @Query("SELECT p FROM PlayesQueue p ORDER BY createdAt DESC LIMIT 1")
+    @Query("SELECT p FROM PlayersQueue p ORDER BY createdAt DESC LIMIT 1")
     Optional<PlayersQueue> findForUpdate();
 
 }
