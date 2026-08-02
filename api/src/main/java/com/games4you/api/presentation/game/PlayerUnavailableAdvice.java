@@ -1,4 +1,4 @@
-package com.games4you.api.presentation;
+package com.games4you.api.presentation.game;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -6,10 +6,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class GameNotFoundAdvice {
-    @ExceptionHandler(GameNotFoundException.class)
+public class PlayerUnavailableAdvice {
+
+    @ExceptionHandler(PlayerUnavailableException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String employeeNotFoundHandler(GameNotFoundException ex) {
+    String playerUnavailableHandler(PlayerUnavailableException ex) {
         return ex.getMessage();
     }
 }

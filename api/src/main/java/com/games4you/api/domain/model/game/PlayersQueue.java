@@ -1,6 +1,9 @@
-package com.games4you.api.domain.model;
+package com.games4you.api.domain.model.game;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,6 +17,9 @@ public class PlayersQueue {
     private Long id;
 
     private Long playerId;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
     public PlayersQueue() {
 

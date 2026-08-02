@@ -1,4 +1,4 @@
-package com.games4you.api.presentation;
+package com.games4you.api.presentation.game;
 
 import java.util.List;
 
@@ -10,16 +10,21 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.games4you.api.domain.model.Game;
-import com.games4you.api.domain.model.GameRepository;
+import com.games4you.api.application.game.GameService;
+import com.games4you.api.application.game.NewGameCmd;
+import com.games4you.api.domain.model.game.Game;
+import com.games4you.api.domain.model.game.GameRepository;
 
 @RestController
 public class GameController {
 
     private final GameRepository repository;
 
-    public GameController(GameRepository repository) {
+    private final GameService gameService;
+
+    public GameController(GameRepository repository, GameService gameService) {
         this.repository = repository;
+        this.gameService = gameService;
     }
 
     // Aggregate root
@@ -31,9 +36,9 @@ public class GameController {
     // end::get-aggregate-root[]
 
     @PostMapping("/games")
-    public Game newGame(@RequestBody Game newGame) {
-    return repository.save(newGame);
-  }
+    public Game newGame(@RequestBody NewGameCmd cmd) {
+      return gameService.newGame(cmd).orElseThrow(() -> new PlayerUnavailableException());
+    }
 
     // Single item
   

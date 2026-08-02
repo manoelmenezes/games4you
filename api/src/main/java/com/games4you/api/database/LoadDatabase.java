@@ -6,8 +6,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.games4you.api.domain.model.Game;
-import com.games4you.api.domain.model.GameRepository;
+import com.games4you.api.domain.model.game.Game;
+import com.games4you.api.domain.model.game.GameRepository;
 
 @Configuration
 public class LoadDatabase {
@@ -18,8 +18,8 @@ public class LoadDatabase {
     CommandLineRunner initDatabase(GameRepository repository) {
 
         return args -> {
-            log.info("Preloading " + repository.save(new Game("r5k1/ppp3p1/2nbqr1p/4p3/2P1P3/1P2B1Q1/P4PPP/3R1RK1 b - - 0 1")));
-            log.info("Preloading " + repository.save(new Game("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")));
+            log.info("Preloading " + repository.save(new Game(1L, 2L, "r5k1/ppp3p1/2nbqr1p/4p3/2P1P3/1P2B1Q1/P4PPP/3R1RK1 b - - 0 1")));
+            log.info("Preloading " + repository.save(new Game(3L, 4L, "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")));
     };
   }
     

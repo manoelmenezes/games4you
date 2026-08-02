@@ -1,4 +1,4 @@
-package com.games4you.api.domain.model;
+package com.games4you.api.domain.model.game;
 
 import java.util.Objects;
 
@@ -13,12 +13,34 @@ public class Game {
     @Id
     private Long id;
 
+    private Long whitePlayerId;
+
+    private Long blackPlayerId;
+
     private String board;
 
     public Game() {}
 
-    public Game(String board) {
+    public Game(Long whitePlayerId, Long blackPlayerId, String board) {
         this.board = board;
+        this.whitePlayerId = whitePlayerId;
+        this.blackPlayerId = blackPlayerId;
+    }
+
+    public Long getBlackPlayerId() {
+        return blackPlayerId;
+    }
+
+    public void setBlackPlayerId(Long blackPlayerId) {
+        this.blackPlayerId = blackPlayerId;
+    }
+
+    public Long getWhitePlayerId() {
+        return whitePlayerId;
+    }
+
+    public void setWhitePlayerId(Long whitePlayerId) {
+        this.whitePlayerId = whitePlayerId;
     }
 
     public Long getId() {
