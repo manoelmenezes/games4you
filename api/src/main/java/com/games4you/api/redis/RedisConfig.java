@@ -28,7 +28,6 @@ public class RedisConfig {
     @Bean
     public ObjectMapper mapper() {
 	    ObjectMapper objectMapper = new ObjectMapper();
-	    objectMapper.setVisibility(PropertyAccessor.GETTER, Visibility.ANY);
 	    return objectMapper;
     }
     @Bean

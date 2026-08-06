@@ -27,6 +27,8 @@ import com.games4you.api.domain.model.game.GameRepository;
 import com.games4you.api.domain.model.game.PlayerUnavailableException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.*;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 
 @RestController
 public class GameController {
@@ -99,11 +101,17 @@ public class GameController {
       
       try {
 	      String jsonMessage = mapper.writeValueAsString(game);
+	      if (jsonMessage == null || jsonMessage.trim().isEmpty()) {
+		log.info("jsonMessage is empty or null.");
+	      } else {
+		log.info("json Message bellow:");
+	      	log.info(jsonMessage);
+	      }
       
       
       		// This dynamically pushes to the topic. If a client is listening, they receive .
 	      log.info("Send json message using redis: ", jsonMessage);
-	      redisTemplate.convertAndSend(topic.getTopic(), jsonMessage);
+	      redisTemplate.convertAndSend(topic.getTopic(), game);
 	      log.info("message sent");
 	} catch (Exception e) {
 		log.error("Fail to convert game to json:  ", e.toString());
@@ -112,3 +120,4 @@ public class GameController {
       return game;
   }
 }
+

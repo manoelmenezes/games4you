@@ -22,7 +22,7 @@ public class RedisReceiver {
 	    try {
              game = objectMapper.readValue(gameJson, Game.class);
 	    } catch (Exception e) {
-		    log.error("Fail to parse game json: ", gameJson);
+		    log.error("Fail to parse game json: ", e);
 		    return;
 	    }
 	    log.info("Game id:", game.getId(), " Current:", game.getCurrentPlayerId());

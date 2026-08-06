@@ -5,8 +5,10 @@ import java.util.Objects;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @Entity
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class", visible = false)
 public class Game {
 
     @GeneratedValue
@@ -22,6 +24,14 @@ public class Game {
     public String board;
 
     public Game() {}
+
+    public Game(Long id, Long whitePlayerId, Long blackPlayerId, String board, Long currentPlayerId) {
+       this.id = id;
+       this.whitePlayerId = whitePlayerId;
+       this.blackPlayerId = blackPlayerId;
+       this.board = board;
+       this.currentPlayerId = currentPlayerId;
+    }
 
     public Game(Long whitePlayerId, Long blackPlayerId, String board) {
         this.board = board;
