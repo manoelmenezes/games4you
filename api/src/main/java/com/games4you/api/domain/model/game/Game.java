@@ -11,13 +11,15 @@ public class Game {
 
     @GeneratedValue
     @Id
-    private Long id;
+    public Long id;
 
-    private Long whitePlayerId;
+    public Long whitePlayerId;
 
-    private Long blackPlayerId;
+    public Long blackPlayerId;
 
-    private String board;
+    public Long currentPlayerId;
+
+    public String board;
 
     public Game() {}
 
@@ -57,6 +59,14 @@ public class Game {
 
     public void setBoard(String board) {
         this.board = board;
+    }
+
+    public Long getCurrentPlayerId() {
+	return currentPlayerId;
+    }
+
+    public void setCurrentPlayerId(Long currentPlayerId) {
+	this.currentPlayerId = currentPlayerId;
     }
 
     @Override

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.listener.ChannelTopic;
 
 import com.games4you.api.application.game.GameService;
 import com.games4you.api.application.game.MoveCmd;
@@ -23,16 +25,25 @@ import com.games4you.api.domain.model.game.Game;
 import com.games4you.api.domain.model.game.GameNotFoundException;
 import com.games4you.api.domain.model.game.GameRepository;
 import com.games4you.api.domain.model.game.PlayerUnavailableException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.*;
 
 @RestController
 public class GameController {
 
+	private static final Logger log = LoggerFactory.getLogger(GameController.class);
     private final GameRepository repository;
 
     private final GameService gameService;
 
     @Autowired
-    private SimpMessagingTemplate messagingTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
+    
+    @Autowired
+    private ChannelTopic topic;
+
+    @Autowired
+    private ObjectMapper mapper;
 
     public GameController(GameRepository repository, GameService gameService) {
         this.repository = repository;
@@ -84,11 +95,19 @@ public class GameController {
       Game game = repository.findById(cmd.getGameId()).get();
 
       Long theOtherPlayerId = game.getBlackPlayerId().equals(Long.valueOf(playerId)) ? game.getWhitePlayerId() : game.getBlackPlayerId();
+      game.setCurrentPlayerId(theOtherPlayerId);
       
-      String theOtherPlayerDestination = "/topic/messages/game/" + gameId + "/player/" + theOtherPlayerId;
+      try {
+	      String jsonMessage = mapper.writeValueAsString(game);
       
-      // This dynamically pushes to the topic. If a client is listening, they receive it.
-      messagingTemplate.convertAndSend(theOtherPlayerDestination, game);
+      
+      		// This dynamically pushes to the topic. If a client is listening, they receive .
+	      log.info("Send json message using redis: ", jsonMessage);
+	      redisTemplate.convertAndSend(topic.getTopic(), jsonMessage);
+	      log.info("message sent");
+	} catch (Exception e) {
+		log.error("Fail to convert game to json:  ", e.toString());
+	}
 
       return game;
   }
