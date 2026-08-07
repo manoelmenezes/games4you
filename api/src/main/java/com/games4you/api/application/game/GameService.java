@@ -33,7 +33,9 @@ public class GameService {
 
     public Optional<Game> newGame(NewGameCmd cmd) {
         PlayersQueue pq = new PlayersQueue(cmd.getPlayerId());
-        playersQueueRepository.save(pq);
+        log.info("Saving player id in queue {}", cmd.getPlayerId());
+	playersQueueRepository.save(pq);
+	log.info("Player id {} saved in queue", cmd.getPlayerId());
 
         return findNewGame(cmd.getPlayerId());
     }
@@ -42,7 +44,8 @@ public class GameService {
         int retry = 0;
         Optional<Game> game = Optional.empty();
         do {
-            game = gameRepository.getCreatedGameByPlayerId(playerId);
+            log.info("Trying to find game created for player {}", playerId);
+	    game = gameRepository.getCreatedGameByPlayerId(playerId);
             retry++;
             if (game.isEmpty()) {                
                 try {
@@ -62,8 +65,10 @@ public class GameService {
 
         PlayersQueue pq1 = getPlayer();
         playersQueueRepository.delete(pq1);
+	log.info("Found one player {} in queue", pq1.getPlayerId());
         PlayersQueue pq2 = getPlayer();
         playersQueueRepository.delete(pq2);
+	log.info("Found another player in queue", pq2.getPlayerId());
 
         Game game = new Game(pq1.getPlayerId(), pq2.getPlayerId(), NEW_GAME_BOARD_FEN);
         gameRepository.save(game);
@@ -73,6 +78,7 @@ public class GameService {
         Optional<PlayersQueue> pq = Optional.empty();
         do {
             try {
+		log.info("Trying to get player from queue");
                 pq = playersQueueRepository.findForUpdate();
                 Thread.sleep(SLEEP_TIME_MS);
             } catch (InterruptedException e) {
@@ -83,9 +89,11 @@ public class GameService {
         } while (!Thread.currentThread().isInterrupted() && pq.isEmpty());
 
         if (pq.isEmpty()) {
+	    log.info("No player in queue. Throwing PlayerUnavailableException");
             throw new PlayerUnavailableException();
         }
 
+	log.info("Player present in queue");
         return pq.get();        
     }
 
