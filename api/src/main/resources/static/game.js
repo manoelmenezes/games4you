@@ -85,4 +85,4 @@ $(function () {
     $("form").on('submit', (e) => e.preventDefault());
     $( "#send" ).click(() => sendMove());
     $( "#createGame" ).click(() => createGame());
-});
+}); 
