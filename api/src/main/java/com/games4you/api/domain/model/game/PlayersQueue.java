@@ -8,17 +8,23 @@ import org.hibernate.annotations.CreationTimestamp;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Column;
+import jakarta.persistence.Table;
+import jakarta.persistence.GenerationType;
 
 @Entity
+@Table(name = "PLAYERS_QUEUE")
 public class PlayersQueue {
 
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 
+    @Column(name="playerId")
     private Long playerId;
 
     @CreationTimestamp
+    @Column(name="createdAt")
     private LocalDateTime createdAt;
 
     public PlayersQueue() {

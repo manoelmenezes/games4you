@@ -6,21 +6,27 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import jakarta.persistence.Column;
+import jakarta.persistence.GenerationType;
 
 @Entity
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class", visible = false)
 public class Game {
 
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     public Long id;
 
+    @Column(name="whitePlayerId")
     public Long whitePlayerId;
 
+    @Column(name="blackPlayerId")
     public Long blackPlayerId;
 
+    @Column(name="currentPlayerId")
     public Long currentPlayerId;
 
+    @Column(name="board")
     public String board;
 
     public Game() {}
