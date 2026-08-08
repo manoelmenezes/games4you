@@ -1,11 +1,11 @@
 // Dynamically uses whatever host/IP the browser used to load the page
 const wsProtocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
-const brokerUrl = `${wsProtocol}${window.location.host}:8080/gs-guide-websocket`;
+const brokerUrl = wsProtocol + window.location.host + '/gs-guide-websocket';
 const stompClient = new StompJs.Client({
     brokerURL: brokerUrl,
 });
 
-
+const url = window.location.protocol + '//' + window.location.host + '/games';
 
 function createGame() {
     // Define the data to send
@@ -14,7 +14,7 @@ function createGame() {
     };
 
     $.ajax({
-	    url: `${window.location.protocol}//${window.location.host}:8080/games`,
+	url: url,
         type: 'POST',
         contentType: 'application/json; charset=utf-8', // Tells the server you are sending JSON
         dataType: 'json',                               // Tells jQuery you expect JSON back
